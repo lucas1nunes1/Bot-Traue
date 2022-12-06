@@ -1,0 +1,59 @@
+import telebot
+
+CHAVE_API = "5834896145:AAG7B_GZNM_Z8sK4wgYt0h1Gl07kvdUsyvo"
+
+bot = telebot.TeleBot(CHAVE_API)
+
+@bot.message_handler(commands=["solicitacao"])
+def solicitacao (mensagem):
+    bot.send_message(mensagem.chat.id, " Para realizar a solicitação de um novo notebook por gentileza entrar em contato com a equipe de TI no email ti@suporte.com.br")
+
+@bot.message_handler(commands=["defeito"])
+def defeito(mensagem):
+    bot.send_message(mensagem.chat.id, " Para a análise do equipamento em questão, será necessário o comparecimento em uma de nossas unidades para a avalição técnica. ")
+
+@bot.message_handler(commands=["devolucao"])
+def devolucao(mensagem):
+    bot.send_message(mensagem.chat.id, " Para a devolução do equipamento em questão será necessário o acionamento da equipe do jurídico no e-mail: juridico@suporte.com.br para a orientação dos próximos passos.  ")
+
+
+
+@bot.message_handler(commands=["opcao1"])
+def opcao1(mensagem):
+    texto = """
+    O que você quer? Clique em uma opção)
+    /solicitacao  Solicitacao 
+    /defeito Defeito
+    /devolucao Devolucao"""
+    bot.send_message(mensagem.chat.id, texto)
+
+
+@bot.message_handler(commands=["opcao2"])
+def opcao2(mensagem):
+    bot.send_message(mensagem.chat.id, "Por gentileza logar no portal suporte.okta.com.br com a senha do seu ultimo acesso")
+
+@bot.message_handler(commands=["opcao3"])
+def opcao3(mensagem):
+    bot.send_message(mensagem.chat.id, "Por gentileza abrir um chamado no portal chamadosti.com.br para que o próximo analista disponível de andamento ao problema em questão")
+    pass
+
+
+def verificar(mensagem):
+    return True
+
+@bot.message_handler(func=verificar)
+def responder(mensagem):
+    texto = """
+    Olá, seja bem-vindo ao primeiro nível de suporte!
+Para iniciar o atendimento, selecione uma opção abaixo:
+/opcao1 Duvidas notebook 
+/opcao2 Dificuldade de acesso ao e-mail corporativo
+/opcao3 Dificuldade de acesso a VPN"""
+
+
+    
+    
+    bot.reply_to(mensagem, texto)
+
+
+bot.polling()
